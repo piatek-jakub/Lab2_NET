@@ -4,9 +4,8 @@
     {
         static void Main(string[] args)
         {
-            Client client = new Client();
-            client.GetData().Wait();
-
+            Menu menu = new Menu();
+            menu.UI();
         }
     }
 }

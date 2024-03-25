@@ -10,19 +10,30 @@ namespace Lab2_NET
     internal class Client
     {
         public HttpClient httpClient;
-        public async Task GetData()
+        public async Task GetData(string call, Search search)
         {
             httpClient = new HttpClient();
-            string call = "https://narutodb.xyz/api/character?page=1&limit=5";
             string response = await httpClient.GetStringAsync(call);
-            //Console.WriteLine(response);
-            AllCharacters allCharacters = new AllCharacters();
+            Console.WriteLine(response);
+            /*AllCharacters allCharacters = new AllCharacters();
             allCharacters = JsonSerializer.Deserialize<AllCharacters>(response);
             foreach(var character in allCharacters.characters)
             {
                 Console.WriteLine(character);
+            }*/
+            switch (search)
+            {
+                case Search.ID:
+                    Character character = new Character();
+                    character = JsonSerializer.Deserialize<Character>(response);
+                    Console.WriteLine(character);
+                    break;
+                case Search.NAME:
+                    break;
+                case Search.NUMBER:
+                    break;
             }
-            Console.WriteLine(allCharacters.characters.Count);
+            
         }
     }
 }
