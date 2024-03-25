@@ -15,12 +15,7 @@ namespace Lab2_NET
             httpClient = new HttpClient();
             string response = await httpClient.GetStringAsync(call);
             Console.WriteLine(response);
-            /*AllCharacters allCharacters = new AllCharacters();
-            allCharacters = JsonSerializer.Deserialize<AllCharacters>(response);
-            foreach(var character in allCharacters.characters)
-            {
-                Console.WriteLine(character);
-            }*/
+
             switch (search)
             {
                 case Search.ID:
@@ -29,8 +24,17 @@ namespace Lab2_NET
                     Console.WriteLine(character);
                     break;
                 case Search.NAME:
+                    Character name = new Character();
+                    character = JsonSerializer.Deserialize<Character>(response);
+                    Console.WriteLine(character);
                     break;
                 case Search.NUMBER:
+                    AllCharacters allCharacters = new AllCharacters();
+                    allCharacters = JsonSerializer.Deserialize<AllCharacters>(response);
+                    foreach (var characterIterator in allCharacters.characters)
+                    {
+                        Console.WriteLine(characterIterator);
+                    }
                     break;
             }
             

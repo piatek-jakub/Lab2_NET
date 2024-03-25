@@ -22,9 +22,11 @@ namespace Lab2_NET
         public void UI()
         {
             Console.WriteLine("1.Find Naruto Character by ID");
-            Console.WriteLine("2.Get first X (1-20) characters");
-            Console.WriteLine("3.Exit");
+            Console.WriteLine("2.Get Naruto Character by Name");
+            Console.WriteLine("3.Get first X (1-20) characters");
+            Console.WriteLine("4.Exit");
             var userInput = Console.ReadLine();
+            string call = "";
             switch(userInput)
             {
                 case "1":
@@ -37,7 +39,7 @@ namespace Lab2_NET
                             Console.WriteLine("ID out of range!");
                             return;
                         }
-                        string call = "https://narutodb.xyz/api/character/" + characterID;
+                        call = "https://narutodb.xyz/api/character/" + characterID;
                         client.GetData(call,Search.ID).Wait();
                     }
                     else
@@ -46,12 +48,38 @@ namespace Lab2_NET
                     }
 
                     break;
-                case "2":
-                    Console.WriteLine("Write number of characters (1-20)");
-                    var numberOfCharacters = Console.ReadLine();
-                    break;
-                default:
 
+                case "2":
+                    string characterName;
+                    Console.WriteLine("Write Name of a character");
+                    characterName = Console.ReadLine();
+                    call = "https://narutodb.xyz/api/character/search?name=" + characterName;
+                    client.GetData(call, Search.NAME).Wait();
+                    break;
+
+                case "3":
+                    Console.WriteLine("Write number of characters (1-20)");
+                    int numberOfCharacters;
+                    if (int.TryParse(Console.ReadLine(), out numberOfCharacters))
+                    {
+                        if (numberOfCharacters < 0 || numberOfCharacters > 20)
+                        {
+                            Console.WriteLine("ID out of range!");
+                            return;
+                        }
+                        call = "https://narutodb.xyz/api/character?page=1&limit=" + numberOfCharacters;
+                        client.GetData(call, Search.NUMBER).Wait();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Wrong input - you have to put number!");
+                    }
+                    break;
+
+                case "4":
+                    break;
+
+                default:
                     break;
 
             }
